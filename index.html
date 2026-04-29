@@ -3,13 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
     <title>Queue</title>
 </head>
-<body>
-   <h1>queue app</h1>
-   <h3>find doctor faster</h3> 
-<input type="text" id="symptom"><button id="searchButton">search</button>
-<output id="output"></output>
+<body class="flex flex-col gap-4">
+   <h1 class="text-3xl">queue app</h1>
+   <h3 class="text-lg">find doctor faster</h3>
+   <div class="flex flex-row gap-2"> 
+<input type="text" id="symptom" placeholder="search by symptom" class="radius-lg w-3/12 rounded-lg border border-gray-300  p-2" >
+<button id="searchButton" class="text-white rounded-lg bg-blue-500 w-24 p-2 hover:bg-blue-900" >search</button>
+</div>
+
+<output id="output"  class=" text-left wrap-break-word w-full"></output>
+<div id="map" class="h-96 w-full rounded-xl mb-4 border-2">
+<div id="output">
+
+</div>
+</div>
 <script type="module" src="queue.js"></script>
 </body>   
 </html>

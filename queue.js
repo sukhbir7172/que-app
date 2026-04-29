@@ -1,32 +1,50 @@
-import { supabase} from './supabaseClient.js';
+import './queue.css'
+import {supabase }from '/supabaseClient.js'
 
-const input = document.getElementById("symptom")
-const searchButton = document.getElementById("searchButton")
+
+const symptom = document.getElementById('symptom');
+const searchButton = document.getElementById('searchButton')
 const output = document.getElementById("output")
-searchButton.addEventListener("click",getDoctors)
 
-async function getDoctors() {
-    const{data:databox,error}= await supabase
-    .from('docs.backend')
-    .select('*')
+const map = L.map('map').setView([52.13, -106.67], 13)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+searchButton.addEventListener('click',getdoctors)
 
-    if (error){
-      console.log("rls didn't let us through",error.message)
-    }
+async function getdoctors() {
 
-    if(databox){
-        console.log("data fetching succesfull")
-    }
+     const{data,error} = await supabase
+     .from('docs.backend')
+     .select('*')
 
-    console.log("What is in databox?", databox);
-   let data = databox.filter(item=>item.symptom ==String(input.value)) 
-  if(data.length>0){for(let i=0; i<data.length;i++){
-    output.textContent = `Doctor: ${data[i].doctor_name}\nAddress: ${data[i].clinic_Address}\nAvailable: ${data[i].is_available}`;
-  }}
-  else{
-     output.textContent="couldn't find a doctor"
-  }
-};  
+     try{
 
-getDoctors();
+     const  shortlist = data.filter(doctor => doctor.symptom === symptom.value)
+      
+        renderDoctors(shortlist)
+      }
+   
+       
+
+     catch(err){
+        console.log("this was the error", err.message)
+     }
+};
+
+function renderDoctors(list){
+output.innerhtml = "";
+
+for(let key of list){
+    const newDiv= document.createElement('div')
+  newDiv.textContent  = key.doctor_name
+    newDiv.className="flex flex-col items-start border-2 p-6 bg-amber-200 w-48 rounded-2xl min-h-37.5 mb-4 shadow-md"
+    output.appendChild(newDiv)
+}
+ 
+for(let key of list){
+     L.marker([key.latitude,key.longitude]).addTo(map)
+    
+}
+
+
+}
 
