@@ -12,7 +12,8 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.42.0",
     "@tailwindcss/postcss": "^4.2.4",
-    "tailwind": "^4.0.0"
+    "maplibre-gl": "^5.24.0",
+    "tailwind": "^2.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.5.0",
